@@ -1,5 +1,6 @@
 package com.example.eksamen2025programmeringbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class Station {
     private float breddeGrad;
 
     @OneToMany
+    @JsonManagedReference("station-drone")
     private List<Drone> dronerIStation;
 
     public Station() {

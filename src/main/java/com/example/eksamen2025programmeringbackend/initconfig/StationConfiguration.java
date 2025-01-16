@@ -20,6 +20,7 @@ public class StationConfiguration implements CommandLineRunner {
             Station station1 = new Station();
             station1.setLængdeGrad(12.5683f);
             station1.setBreddeGrad(55.6761f);
+
             stationRepository.save(station1);
 
             Station station2 = new Station();

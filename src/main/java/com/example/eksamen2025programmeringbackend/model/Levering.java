@@ -1,5 +1,6 @@
 package com.example.eksamen2025programmeringbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalTime;
@@ -11,18 +12,23 @@ public class Levering {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int leveringsID;
     private String adresse;
+    @Column(nullable = false)
     private LocalTime forventetLevering;
     private LocalTime faktiskLevering;
     @ManyToOne
     @JoinColumn(name = "pizzaFK", referencedColumnName = "pizzaID")
+    @JsonBackReference("pizza-levering")
     private Pizza pizzaTilLevering;
 
     @ManyToOne
     @JoinColumn(name = "droneFK", referencedColumnName = "droneID")
+    @JsonBackReference("drone-lervering")
     private Drone leveringsDrone;
 
-    public Levering(int leveringsID, String adresse, LocalTime forventetLevering, LocalTime faktiskLevering, Pizza pizzaTilLevering) {
-        this.leveringsID = leveringsID;
+    public Levering(String adresse, LocalTime forventetLevering, LocalTime faktiskLevering, Pizza pizzaTilLevering) {
+        if (forventetLevering == null) {
+            throw new IllegalArgumentException("Du skal indtaste den forventede leveringstid");
+        }
         this.adresse = adresse;
         this.forventetLevering = forventetLevering;
         this.faktiskLevering = faktiskLevering;

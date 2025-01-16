@@ -1,8 +1,14 @@
 package com.example.eksamen2025programmeringbackend.model;
 
 import com.example.eksamen2025programmeringbackend.model.enums.DroneStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+import java.util.random.RandomGenerator;
 
 @Entity
 public class Drone {
@@ -14,17 +20,19 @@ public class Drone {
     @Enumerated(EnumType.STRING)
     private DroneStatus droneStatus;
 
-    @OneToMany
-    private List<Levering>leveringerTilDrone;
+    @OneToMany(mappedBy = "leveringsDrone")
+    @JsonManagedReference("drone-levering")
+    private List<Levering> leveringerTilDrone;
 
     @ManyToOne
-            @JoinColumn(name = "stationFK", referencedColumnName = "stationID")
+    @JoinColumn(name = "stationFK", referencedColumnName = "stationID")
+    @JsonBackReference("station-drone")
     private Station specifikkeDronesStation;
 
-    public Drone(int droneID, int serieNummer, DroneStatus droneStatus, List<Levering> leveringerTilDrone, Station specifikkeDronesStation) {
+    public Drone(int droneID, int serieNummer, List<Levering> leveringerTilDrone, Station specifikkeDronesStation) {
         this.droneID = droneID;
         this.serieNummer = serieNummer;
-        this.droneStatus = droneStatus;
+        this.droneStatus = DroneStatus.I_DRIFT;
         this.leveringerTilDrone = leveringerTilDrone;
         this.specifikkeDronesStation = specifikkeDronesStation;
     }
