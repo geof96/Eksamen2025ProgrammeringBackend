@@ -6,7 +6,6 @@ import com.example.eksamen2025programmeringbackend.model.enums.DroneStatus;
 import com.example.eksamen2025programmeringbackend.repository.DroneRepository;
 import com.example.eksamen2025programmeringbackend.repository.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +27,7 @@ public class DroneService {
 
         return droneRepository.findAll();
     }
+
 
     public Drone gemDrone(Drone drone) {
         List<Station> stations = stationRepository.findAll();
@@ -64,6 +64,9 @@ public class DroneService {
 
     public ResponseEntity<Drone> opdaterDroneInfo(DroneStatus nyDroneStatus, int id) {
         return droneRepository.findById(id).map(eksisterendeDrone -> {
+            if (eksisterendeDrone.getDroneStatus() == DroneStatus.UDFASET) {
+                throw new IllegalStateException("Dronen med denne ID: " + id + " er udfaset");
+            }
             eksisterendeDrone.setDroneStatus(nyDroneStatus);
             Drone opdateretDrone = droneRepository.save(eksisterendeDrone);
             return ResponseEntity.ok(opdateretDrone);

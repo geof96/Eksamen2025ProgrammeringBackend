@@ -21,7 +21,6 @@ public class Drone {
     private DroneStatus droneStatus;
 
     @OneToMany(mappedBy = "leveringsDrone")
-    @JsonManagedReference("drone-levering")
     private List<Levering> leveringerTilDrone;
 
     @ManyToOne

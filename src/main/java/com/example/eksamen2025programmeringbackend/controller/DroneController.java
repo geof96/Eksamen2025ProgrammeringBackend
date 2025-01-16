@@ -43,8 +43,9 @@ public class DroneController {
     }
 
 
-    @PutMapping("/retire")
+    @PutMapping("/retire/{id}")
     public ResponseEntity<Drone> udfaseDrone(@PathVariable int id) {
+        System.out.println("Her er: " + id);
         return droneService.opdaterDroneInfo(DroneStatus.UDFASET, id);
     }
 }

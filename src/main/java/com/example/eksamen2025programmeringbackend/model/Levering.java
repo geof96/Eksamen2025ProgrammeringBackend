@@ -1,6 +1,7 @@
 package com.example.eksamen2025programmeringbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalTime;
@@ -22,7 +23,7 @@ public class Levering {
 
     @ManyToOne
     @JoinColumn(name = "droneFK", referencedColumnName = "droneID")
-    @JsonBackReference("drone-lervering")
+    @JsonIgnore
     private Drone leveringsDrone;
 
     public Levering(String adresse, LocalTime forventetLevering, LocalTime faktiskLevering, Pizza pizzaTilLevering) {
