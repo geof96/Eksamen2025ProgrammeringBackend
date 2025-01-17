@@ -28,8 +28,14 @@ public class LeveringController {
     }
 
     @GetMapping("deliveries/queue")
-    public List<Levering> leveringerUdenDrone(){
-        return null;
+    public List<Levering> leveringerUdenDrone() {
+        return leveringService.seAlleLeveringerUdenDroner();
+    }
+
+    @PutMapping("deliveries/schedule/{leveringID}")
+    public ResponseEntity<Levering> leveringTilDrone(@PathVariable int leveringID, @RequestParam Integer droneID) {
+        return leveringService.leveringTilDrone(leveringID, droneID);
+
     }
 
 
