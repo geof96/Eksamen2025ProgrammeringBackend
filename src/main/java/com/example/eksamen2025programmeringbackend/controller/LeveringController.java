@@ -27,4 +27,10 @@ public class LeveringController {
         return new ResponseEntity<>(levering, HttpStatus.CREATED);
     }
 
+    @GetMapping("deliveries/queue")
+    public List<Levering> leveringerUdenDrone(){
+        return null;
+    }
+
+
 }

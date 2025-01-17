@@ -21,9 +21,7 @@ public class LeveringService {
         return leveringRepository.findAll().stream()
                 .filter(levering -> !levering.isFaktiskLevering())
                 .sorted(Comparator.comparing(Levering::getForventetLevering))
-                .toList()
-
-                ;
+                .toList();
     }
 
     public Levering opretNyeLeveringer(Levering nyLevering) {
