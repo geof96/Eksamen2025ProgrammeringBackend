@@ -27,14 +27,14 @@ public class LeveringController {
         return new ResponseEntity<>(levering, HttpStatus.CREATED);
     }
 
-    @GetMapping("deliveries/queue")
+    @GetMapping("/deliveries/queue")
     public List<Levering> leveringerUdenDrone() {
         return leveringService.seAlleLeveringerUdenDroner();
     }
 
-    @PutMapping("deliveries/schedule/{leveringID}")
-    public ResponseEntity<Levering> leveringTilDrone(@PathVariable int leveringID, @RequestParam Integer droneID) {
-        return leveringService.leveringTilDrone(leveringID, droneID);
+    @PutMapping("/deliveries/schedule/{leveringID}")
+    public ResponseEntity<Levering> leveringTilDrone(@PathVariable int leveringID) {
+        return leveringService.leveringTilDrone(leveringID);
 
     }
 

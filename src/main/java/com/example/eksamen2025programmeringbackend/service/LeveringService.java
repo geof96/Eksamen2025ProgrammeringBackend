@@ -46,35 +46,31 @@ public class LeveringService {
         return leveringRepository.save(nyLevering);
     }
 
-    public ResponseEntity<Levering> leveringTilDrone(int leveringID, Integer droneID) {
+    public ResponseEntity<Levering> leveringTilDrone(int leveringID) {
         Optional<Levering> levering = leveringRepository.findById(leveringID);
 
         if (levering.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
+
         Levering denOpdateretLevering = levering.get();
 
         if (denOpdateretLevering.getLeveringsDrone() != null) {
             throw new IllegalStateException("Denne levering har allerede en drone");
         }
 
-        if (droneID != null) {
-            Optional<Drone> valgteDrone = droneRepository.findById(droneID);
-            if (valgteDrone.isEmpty() || valgteDrone.get().getDroneStatus() != DroneStatus.I_DRIFT) {
-                throw new IllegalStateException("Drone er ikke fundet eller er ikke i drift");
-            }
-            denOpdateretLevering.setLeveringsDrone(valgteDrone.get());
-        } else {
-            Drone dronerTilstede = droneRepository.findAll().stream()
-                    .filter(drone -> drone.getDroneStatus() == DroneStatus.I_DRIFT)
-                    .findFirst().orElseThrow(() -> new IllegalStateException("Alle droner er i drift"));
+        // Find en tilfældig drone i drift
+        Drone dronerTilstede = droneRepository.findAll().stream()
+                .filter(drone -> drone.getDroneStatus() == DroneStatus.I_DRIFT)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Alle droner er i drift"));
 
-            denOpdateretLevering.setLeveringsDrone(dronerTilstede);
-        }
+        denOpdateretLevering.setLeveringsDrone(dronerTilstede);
 
         leveringRepository.save(denOpdateretLevering);
         return ResponseEntity.ok(denOpdateretLevering);
     }
+
 
 
 }
