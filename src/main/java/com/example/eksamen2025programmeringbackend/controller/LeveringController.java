@@ -38,5 +38,17 @@ public class LeveringController {
 
     }
 
+    @PutMapping("/deliveries/finished/{lerveringsID}")
+    public ResponseEntity<String> markerSomLeveret(@PathVariable int leveringsID) {
+        try {
+            leveringService.markerSomLeveret(leveringsID);
+            return ResponseEntity.status(HttpStatus.OK).body("Levering er blevet markeret som leveret");
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("En fejl opstod");
+        }
+    }
+
 
 }

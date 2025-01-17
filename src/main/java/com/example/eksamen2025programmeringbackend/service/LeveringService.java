@@ -71,6 +71,22 @@ public class LeveringService {
         return ResponseEntity.ok(denOpdateretLevering);
     }
 
+    public void markerSomLeveret(int leveringsID) {
+
+        Optional<Levering> levering = leveringRepository.findById(leveringsID);
+
+        if (levering.isEmpty()) {
+            throw new IllegalStateException("Ingen levering.");
+        }
+
+        Levering leveringFraDatabasen = levering.get();
+        if (leveringFraDatabasen.getLeveringsDrone() == null){
+            throw new IllegalStateException("Ingen drone tildelt.");
+        }
+
+        leveringFraDatabasen.setFaktiskLevering(true);
+        leveringRepository.save(leveringFraDatabasen);
+    }
 
 
 }
