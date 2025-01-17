@@ -15,7 +15,7 @@ public class Levering {
     private String adresse;
     @Column(nullable = false)
     private LocalTime forventetLevering;
-    private LocalTime faktiskLevering;
+    private boolean faktiskLevering;
     @ManyToOne
     @JoinColumn(name = "pizzaFK", referencedColumnName = "pizzaID")
     @JsonBackReference("pizza-levering")
@@ -26,7 +26,7 @@ public class Levering {
     @JsonIgnore
     private Drone leveringsDrone;
 
-    public Levering(String adresse, LocalTime forventetLevering, LocalTime faktiskLevering, Pizza pizzaTilLevering) {
+    public Levering(String adresse, LocalTime forventetLevering, boolean faktiskLevering, Pizza pizzaTilLevering) {
         if (forventetLevering == null) {
             throw new IllegalArgumentException("Du skal indtaste den forventede leveringstid");
         }
@@ -63,11 +63,11 @@ public class Levering {
         this.forventetLevering = forventetLevering;
     }
 
-    public LocalTime getFaktiskLevering() {
+    public boolean isFaktiskLevering() {
         return faktiskLevering;
     }
 
-    public void setFaktiskLevering(LocalTime faktiskLevering) {
+    public void setFaktiskLevering(boolean faktiskLevering) {
         this.faktiskLevering = faktiskLevering;
     }
 

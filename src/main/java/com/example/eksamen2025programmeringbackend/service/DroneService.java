@@ -24,7 +24,6 @@ public class DroneService {
 
     //Businesslogic for at vise alle droner.
     public List<Drone> seAlleDroner() {
-
         return droneRepository.findAll();
     }
 
