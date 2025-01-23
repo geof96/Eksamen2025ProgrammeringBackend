@@ -18,7 +18,7 @@ public class DroneController {
     private DroneService droneService;
 
     @PostMapping("/add")
-    public ResponseEntity<Drone> opretDrone(@RequestBody Drone inputDrone) {
+    public ResponseEntity<Drone> opretDrone(Drone inputDrone) {
         System.out.println("hej");
         if (droneService.gemDrone(inputDrone) != null) {
             return new ResponseEntity<>(inputDrone, HttpStatus.CREATED);

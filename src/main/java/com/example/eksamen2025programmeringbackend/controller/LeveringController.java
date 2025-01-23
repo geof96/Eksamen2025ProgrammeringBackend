@@ -38,15 +38,13 @@ public class LeveringController {
 
     }
 
-    @PutMapping("/deliveries/finished/{lerveringsID}")
-    public ResponseEntity<String> markerSomLeveret(@PathVariable int leveringsID) {
+    @PutMapping("/deliveries/finished/{leveringID}")
+    public ResponseEntity<String> markerSomLeveret(@PathVariable int leveringID) {
         try {
-            leveringService.markerSomLeveret(leveringsID);
+            leveringService.markerSomLeveret(leveringID);
             return ResponseEntity.status(HttpStatus.OK).body("Levering er blevet markeret som leveret");
         } catch (IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("En fejl opstod");
         }
     }
 

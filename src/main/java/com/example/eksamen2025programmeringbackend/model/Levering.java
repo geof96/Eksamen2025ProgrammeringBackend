@@ -23,7 +23,7 @@ public class Levering {
 
     @ManyToOne
     @JoinColumn(name = "droneFK", referencedColumnName = "droneID")
-    @JsonIgnore
+    @JsonBackReference
     private Drone leveringsDrone;
 
     public Levering(String adresse, LocalTime forventetLevering, boolean faktiskLevering, Pizza pizzaTilLevering) {
